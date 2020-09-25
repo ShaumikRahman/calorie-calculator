@@ -1,14 +1,30 @@
 //document.getElementById('heightSecondary').style.display = "none";
 //document.getElementById('weightSecondary').style.display = "none";
 
+// auto complete height from cm
+document.getElementById('height').addEventListener('input', e => {
+    cmToFeetInches(e.target.value);
+    document.getElementById('feet').value = newFeet;
+    document.getElementById('inches').value = newInch;
+})
+
+// auto complete height from feet
+document.getElementById('height').addEventListener('input', e => {
+    cmToFeetInches(e.target.value);
+    document.getElementById('feet').value = newFeet;
+    document.getElementById('inches').value = newInch;
+})
+
 const form = document.getElementById('form');
 let validated = false;
 let alertActive = false;
 let age,gender,height,feet,inches,weight,stone,pound;
+let newFeet, newInch;
 form.addEventListener('submit', e => {
     e.preventDefault();
     validationCheck();
     if (validated == true) {
+        conversion();
         assignVariables();
         calculate();
         outputAll();
@@ -17,9 +33,9 @@ form.addEventListener('submit', e => {
 })
 
 function validationCheck() {
-    if (form.elements[0].value.length == 0 || 
-        form.elements[3].value.length == 0 || 
-        form.elements[6].value.length == 0) {
+    if (form.elements[0].value.length <= 0 || 
+        form.elements[3].value.length <= 0 || 
+        form.elements[6].value.length <= 0) {
             validated = false;
             alertActive = true;
             if (alertActive != false) {
@@ -58,7 +74,12 @@ function outputAll() {
     console.log(weight);
 }
 
+function cmToFeetInches(cm) {
+    let newCm = cm / 30.48;
+    newFeet = Math.floor(newCm);
+    newInch = newCm - Math.floor(newCm);
+}
 
-
+// Feet+Inch = cm / 30.48, integer = feet, fraction * 12 = inch
 // BMR = 10W + 6.25H - 5A + 5 male
 // BMR = 10W + 6.25H - 5A - 161 female
