@@ -5,15 +5,20 @@
 document.getElementById('height').addEventListener('input', e => {
     cmToFeetInches(e.target.value);
     document.getElementById('feet').value = newFeet;
-    document.getElementById('inches').value = newInch;
+    document.getElementById('inches').value = Math.floor((newInch * 10));
 })
 
 // auto complete height from feet
-document.getElementById('height').addEventListener('input', e => {
-    cmToFeetInches(e.target.value);
-    document.getElementById('feet').value = newFeet;
-    document.getElementById('inches').value = newInch;
+document.getElementById('feet').addEventListener('input', e => {
+    document.getElementById('height').value = e.target.value * 30.48 +
+        document.getElementById('inches').value;
 })
+
+// // auto complete height from inches
+// document.getElementById('inches').addEventListener('input', e => {
+//     document.getElementById('height').value = e.target.value / 22 +
+//         document.getElementById('feet').value;
+// })
 
 const form = document.getElementById('form');
 let validated = false;
