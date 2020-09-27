@@ -5,19 +5,27 @@
 document.getElementById('height').addEventListener('input', e => {
     cmToFeetInches(e.target.value);
     document.getElementById('feet').value = newFeet;
-    document.getElementById('inches').value = Math.floor((newInch * 10));
+    document.getElementById('inches').value = newInch;
 })
 
 // auto complete height from feet
 document.getElementById('feet').addEventListener('input', e => {
-    document.getElementById('height').value = e.target.value * 30.48 +
-        document.getElementById('inches').value;
+    if (document.getElementById('inches').value.length <= 0) {
+        document.getElementById('height').value = parseInt(e.target.value * 30.48);
+    } else {
+        document.getElementById('height').value = (parseInt(e.target.value) + 
+        parseFloat(document.getElementById('inches').value / 12)) * 30.48;
+    }
 })
 
 // // auto complete height from inches
 // document.getElementById('inches').addEventListener('input', e => {
-//     document.getElementById('height').value = e.target.value / 22 +
-//         document.getElementById('feet').value;
+//     if (document.getElementById('feet').value.length <= 0) {
+//         document.getElementById('height').value = parseFloat(e.target.value / 12) * 30.48;
+//     } else {
+//         document.getElementById('height').value = (parseFloat(e.target.value / 12) +
+//         document.getElementById('feet').value) * 30.48;
+//     }
 // })
 
 const form = document.getElementById('form');
@@ -80,9 +88,13 @@ function outputAll() {
 }
 
 function cmToFeetInches(cm) {
-    let newCm = cm / 30.48;
-    newFeet = Math.floor(newCm);
-    newInch = newCm - Math.floor(newCm);
+    console.log(`incoming cm is ${cm}`);
+    let cmConverted = cm / 30.48;
+    console.log(`converted cm is ${cmConverted}`);
+    newFeet = Math.floor(cmConverted);
+    console.log(`feet is ${newFeet}`);
+    newInch = (cmConverted - newFeet) * 12;
+    console.log(`inch is ${newInch}`);
 }
 
 // Feet+Inch = cm / 30.48, integer = feet, fraction * 12 = inch
