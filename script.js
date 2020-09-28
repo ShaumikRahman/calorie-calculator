@@ -18,12 +18,12 @@ document.getElementById('feet').addEventListener('input', e => {
     }
 })
 
-// auto complete height from feet
+// auto complete height from inches
 document.getElementById('inches').addEventListener('input', e => {
     if (document.getElementById('feet').value.length <= 0) {
         document.getElementById('height').value = parseFloat((e.target.value / 12) * 30.48);
     } else {
-        document.getElementById('height').value = (parseInt(document.getElementById('feet')) + 
+        document.getElementById('height').value = (parseInt(document.getElementById('feet').value) + 
         parseFloat(e.target.value / 12)) * 30.48;
     }
 })
