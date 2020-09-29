@@ -1,6 +1,3 @@
-//document.getElementById('heightSecondary').style.display = "none";
-//document.getElementById('weightSecondary').style.display = "none";
-
 // auto complete height from cm
 document.getElementById('height').addEventListener('input', e => {
     cmToFeetInches(e.target.value);
@@ -58,18 +55,16 @@ document.getElementById('pounds').addEventListener('input', e => {
 const form = document.getElementById('form');
 let validated = false;
 let alertActive = false;
-let age,gender,height,feet,inches,weight,stone,pound;
+let age,gender,height,feet,inches,weight,stone,pound,BMR;
 let newFeet, newInch, newStone, newPound;
 form.addEventListener('submit', e => {
     e.preventDefault();
     validationCheck();
     if (validated == true) {
-        conversion();
         assignVariables();
         calculate();
-        outputAll();
+        output();
     }
-    
 })
 
 function validationCheck() {
@@ -99,39 +94,27 @@ function assignVariables() {
 }
 
 function calculate() {
-
+    if (gender == 'male') {
+        BMR = 10 * weight + 6.25 * height - 5 * age + 5;
+    } else {
+        BMR = 10 * weight + 6.25 * height - 5 * age - 161;
+    }
 }
 
-function outputAll() {
-    // console.log('first values');
-    // for (let i = 0; i < form.elements.length; i++) {
-    //     console.log(`element ${i} is ${form.elements[i].value}`);
-    // }
-    // console.log('second values');
-    console.log(age);
-    console.log(gender);
-    console.log(height);
-    console.log(weight);
+function output() {
+    document.getElementById('output').innerHTML = '<div class="alert alert-success alert-dismissible fade show" role="alert"><strong>'+BMR+'</strong><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>';
 }
 
 function cmToFeetInches(cm) {
-    console.log(`incoming cm is ${cm}`);
     let cmConverted = cm / 30.48;
-    console.log(`converted cm is ${cmConverted}`);
     newFeet = Math.floor(cmConverted);
-    console.log(`feet is ${newFeet}`);
     newInch = (cmConverted - newFeet) * 12;
-    console.log(`inch is ${newInch}`);
 }
 
 function kgToStonePounds(kg) {
-    console.log(`incoming kg is ${kg}`);
     let kgConverted = kg / 6.35029318;
-    console.log(`converted kg is ${kgConverted}`);
     newStone = Math.floor(kgConverted);
-    console.log(`stone is ${newStone}`);
     newPound = (kgConverted - newStone) * 14;
-    console.log(`pound is ${newPound}`);
 }
 
 // Feet+Inch = cm / 30.48, integer = feet, fraction * 12 = inch
