@@ -1,3 +1,7 @@
+document.getElementById('clear').addEventListener('click', e => {
+    document.getElementById('form').reset();
+})
+
 // auto complete height from cm
 document.getElementById('height').addEventListener('input', e => {
     cmToFeetInches(e.target.value);
