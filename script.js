@@ -28,11 +28,38 @@ document.getElementById('inches').addEventListener('input', e => {
     }
 })
 
+// auto complete weight from kg
+document.getElementById('weight').addEventListener('input', e => {
+    kgToStonePounds(e.target.value);
+    document.getElementById('stone').value = newStone;
+    document.getElementById('pounds').value = newPound;
+})
+
+// auto complete weight from stone
+document.getElementById('stone').addEventListener('input', e => {
+    if (document.getElementById('pounds').value.length <= 0) {
+        document.getElementById('weight').value = parseInt(e.target.value * 6.35029318);
+    } else {
+        document.getElementById('weight').value = (parseInt(e.target.value) + 
+        parseFloat(document.getElementById('pounds').value / 14)) * 6.35029318;
+    }
+})
+
+// auto complete weight from pounds
+document.getElementById('pounds').addEventListener('input', e => {
+    if (document.getElementById('stone').value.length <= 0) {
+        document.getElementById('weight').value = parseFloat((e.target.value / 14) * 6.35029318);
+    } else {
+        document.getElementById('weight').value = (parseInt(document.getElementById('stone').value) + 
+        parseFloat(e.target.value / 14)) * 6.35029318;
+    }
+})
+
 const form = document.getElementById('form');
 let validated = false;
 let alertActive = false;
 let age,gender,height,feet,inches,weight,stone,pound;
-let newFeet, newInch;
+let newFeet, newInch, newStone, newPound;
 form.addEventListener('submit', e => {
     e.preventDefault();
     validationCheck();
@@ -95,6 +122,16 @@ function cmToFeetInches(cm) {
     console.log(`feet is ${newFeet}`);
     newInch = (cmConverted - newFeet) * 12;
     console.log(`inch is ${newInch}`);
+}
+
+function kgToStonePounds(kg) {
+    console.log(`incoming kg is ${kg}`);
+    let kgConverted = kg / 6.35029318;
+    console.log(`converted kg is ${kgConverted}`);
+    newStone = Math.floor(kgConverted);
+    console.log(`stone is ${newStone}`);
+    newPound = (kgConverted - newStone) * 14;
+    console.log(`pound is ${newPound}`);
 }
 
 // Feet+Inch = cm / 30.48, integer = feet, fraction * 12 = inch
