@@ -106,7 +106,7 @@ function calculate() {
 }
 
 function output() {
-    document.getElementById('output').innerHTML = '<div class="alert alert-success alert-dismissible fade show" role="alert"><strong>'+BMR+'</strong><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>';
+    document.getElementById('output').innerHTML = '<div class="alert alert-success alert-dismissible fade show text-center" role="alert"><strong>'+BMR+'</strong><br>is the number of calories to maintain your weight.<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>';
 }
 
 function cmToFeetInches(cm) {
